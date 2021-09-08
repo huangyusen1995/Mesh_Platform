@@ -24,5 +24,3 @@ qt-vsaddin-msvc2017-2.4.0.vsix
 E:\workspace\Easy3D-main\build\lib\Release
 E:\workspace\qt5.12.9\5.12.9\msvc2017_64\lib
 E:\workspace\CGAL-5.2.3\auxiliary\gmp\lib
-
-change9.8
