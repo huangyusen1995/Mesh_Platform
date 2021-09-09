@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
+    <Keyword>QtVS_v300</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>Mesh_Platform</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <QtInstall>msvc2017_64</QtInstall>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <QtInstall>msvc2017_64</QtInstall>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>E:\workspace\CGAL-5.2.3\auxiliary\gmp\lib;C:\QT\Qt5.12.9\5.12.9\msvc2017_64\lib;E:\workspace\Easy3D-main\build\lib\Release;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>Mesh_Platform.dir\Release\</IntDir>
+    <TargetName>Mesh_Platform</TargetName>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtModules>core;gui;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <QtModules>core;gui;widgets</QtModules>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>E:\workspace\needs\qt5.12.9\5.12.9\msvc2017_64\lib\Qt5OpenGL.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_renderer.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_algo.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_gui.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_algo_ext.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_fileio.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_core.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_kdtree.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\easy3d_util.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\avcodec.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\avdevice.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\avfilter.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\avformat.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\swscale.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\swresample.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\avutil.lib;E:\workspace\needs\ffmpeg-4.4-full_build-shared\lib\postproc.lib;E:\workspace\needs\qt5.12.9\5.12.9\msvc2017_64\lib\Qt5Widgets.lib;E:\workspace\needs\qt5.12.9\5.12.9\msvc2017_64\lib\Qt5Gui.lib;E:\workspace\needs\qt5.12.9\5.12.9\msvc2017_64\lib\Qt5Core.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_kdtree.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_poisson.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_ransac.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_triangle.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_tetgen.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_glutess.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_glew.lib;opengl32.lib;glu32.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_lastools.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_rply.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_backward.lib;E:\workspace\Easy3D-main64TEST\build\lib\Release\3rd_easyloggingpp.lib;C:\dev\CGAL-5.2.3\auxiliary\gmp\lib\libmpfr-4.lib;C:\dev\CGAL-5.2.3\auxiliary\gmp\lib\libgmp-10.lib;E:\workspace\Easy3D-main64TEST\build\x64\Release\qem_train.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>E:\workspace\Easy3D-main;E:\workspace\boost_1_71_0;E:\workspace\CGAL-5.2.3;C:\QT\Qt5.12.9\5.12.9\msvc2017_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;HAS_QT5;QT_DEPRECATED_WARNINGS;_CRT_SECURE_NO_DEPRECATE;ENV_64_BIT;HAS_CGAL;QT_USE_QSTRINGBUILDER;QT_CORE_LIB;QT_NO_DEBUG;QT_GUI_LIB;QT_WIDGETS_LIB;QT_OPENGL_LIB;GLEW_STATIC;GLEW_NO_GLU;BACKWARD_HAS_UNWIND=1;BACKWARD_HAS_LIBUNWIND=0;BACKWARD_HAS_BACKTRACE=0;BACKWARD_HAS_BACKTRACE_SYMBOL=1;BACKWARD_HAS_DW=0;BACKWARD_HAS_BFD=0;BACKWARD_HAS_DWARF=0;ELPP_FEATURE_ALL;ELPP_STL_LOGGING;ELPP_THREAD_SAFE;ELPP_NO_DEFAULT_LOG_FILE;ELPP_DISABLE_DEFAULT_CRASH_HANDLING;NOMINMAX;CMAKE_INTDIR="Release";_CONSOLE</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>easy3d_renderer.lib;easy3d_algo.lib;easy3d_gui.lib;easy3d_algo_ext.lib;easy3d_kdtree.lib;easy3d_fileio.lib;easy3d_core.lib;easy3d_util.lib;3rd_lastools.lib;3rd_rply.lib;3rd_backward.lib;3rd_easyloggingpp.lib;3rd_kdtree.lib;3rd_poisson.lib;3rd_ransac.lib;3rd_triangle.lib;3rd_tetgen.lib;3rd_glutess.lib;3rd_glew.lib;Qt5Widgets.lib;Qt5Gui.lib;Qt5Core.lib;Qt5OpenGL.lib;libmpfr-4.lib;libgmp-10.lib;opengl32.lib;glu32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Algorithm\BilateralNormalFiltering.cpp" />
+    <ClCompile Include="Algorithm\Planar_FeaturePreserving.cpp" />
+    <ClCompile Include="Algorithm\QEM_train.cpp" />
+    <ClCompile Include="Algorithm\SurfaceMesh_error.cpp" />
+    <ClCompile Include="Dialog\DialogFeaturePreservingMeshSimplification.cpp" />
+    <ClCompile Include="Dialog\WidgetRendering.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh_Platform.cpp" />
+    <ClCompile Include="viewer_mesh_platform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Mesh_Platform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="Dialog\Dialog_FeaturePreservingMeshSimplification.ui" />
+    <QtUic Include="Dialog\Widget_Rendering.ui" />
+    <QtUic Include="Mesh_Platform.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Mesh_Platform.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="viewer_mesh_platform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithm\BilateralNormalFiltering.h" />
+    <ClInclude Include="Algorithm\Planar_FeaturePreserving.h" />
+    <ClInclude Include="Algorithm\QEM_trian.h" />
+    <ClInclude Include="Algorithm\SurfaceMesh_error.h" />
+    <ClInclude Include="CGALTypes.h" />
+    <QtMoc Include="Dialog\WidgetRendering.h" />
+    <QtMoc Include="Dialog\DialogFeaturePreservingMeshSimplification.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
