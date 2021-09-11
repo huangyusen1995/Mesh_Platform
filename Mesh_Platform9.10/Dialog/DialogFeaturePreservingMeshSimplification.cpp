@@ -245,12 +245,12 @@ void DialogFeaturePreservingMeshSimplification::setQEMversion()
 	SurfaceMeshQEM simp = SurfaceMeshQEM(mesh);
 	if (checkBox_traditionalQEM->isChecked())
 	{
-		simp.initialize(0);
+		simp.initialize(0,10.0,0.0,180.0);
 		simp.simplify(points_number);
 	}
 	else
 	{
-		simp.initialize(cur_id);
+		simp.initialize(cur_id, 10.0, 0.0, 180.0);
 		simp.simplify(points_number);
 	}
 }
