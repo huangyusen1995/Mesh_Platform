@@ -22,12 +22,16 @@ namespace easy3d {
 	SurfaceMeshQEM::SurfaceMeshQEM(SurfaceMesh *mesh)  //SurfaceMeshSimplification类的初始化构造
 		: mesh_(mesh), initialized_(false), queue_(nullptr) {
 
+		aspect_ratio_ = 0;            //纵横比
+		edge_length_ = 0;
+		normal_deviation_ = 0;        //法线偏差
 		// get properties 找到点的属性，为数组
 		vpoint_ = mesh_->get_vertex_property<vec3>("v:point");
-
+		
 		// compute face normals 找到面的属性，为数组
 		mesh_->update_face_normals();
 		fnormal_ = mesh_->get_face_property<vec3>("f:normal");
+		
 	}
 
 	//-----------------------------------------------------------------------------
@@ -37,11 +41,26 @@ namespace easy3d {
 
 	//-----------------------------------------------------------------------------
 
-	void SurfaceMeshQEM::initialize(int cur_id) {
+	void SurfaceMeshQEM::initialize(int cur_id, float aspect_ratio , float edge_length, float normal_deviation ) {
 		if (!mesh_->is_triangle_mesh())   //如果mesh不是三角网格，退出
 			return;
 
-
+		// store parameters 存储参数
+		aspect_ratio_ = aspect_ratio;
+		normal_deviation_ = normal_deviation / 180.0 * M_PI;
+		edge_length_ = edge_length;
+		if (normal_deviation_ > 0.0)
+			normal_cone_ = mesh_->face_property<NormalCone>("f:normalCone");
+		else
+			mesh_->remove_face_property(normal_cone_);
+		
+		// initialize normal cones 初始化法线锥？？？？
+		if (normal_deviation_) {
+			for (auto f : mesh_->faces()) {
+				normal_cone_[f] = NormalCone(fnormal_[f]);
+			}
+		}
+		
 		// add quadric property对每个点加入二次误差的属性
 		vquadric_ = mesh_->add_vertex_property<Quadric>("v:quadric");
 		//计算代理
@@ -145,8 +164,9 @@ namespace easy3d {
 		//	}   //vquadric_[v]为点v的邻域面的平方距离
 		//}
 		
-		cur_id = 0;
+		//cur_id = 0;
 		initialized_ = true;
+		
 	}
 
 	//-----------------------------------------------------------------------------
@@ -159,7 +179,7 @@ namespace easy3d {
 
 
 		unsigned int nv(mesh_->n_vertices());            //nv为最初的点总数量；
-
+		
 		std::vector<SurfaceMesh::Vertex> one_ring;       //点的一环邻域点
 		std::vector<SurfaceMesh::Vertex>::iterator or_it, or_end;//一环邻域点的迭代器！！@
 		SurfaceMesh::Halfedge h;                         //半边h
@@ -169,7 +189,7 @@ namespace easy3d {
 		vpriority_ = mesh_->add_vertex_property<float>("v:prio"); //每个点的优先级。小数数组
 		heap_pos_ = mesh_->add_vertex_property<int>("v:heap");    //每个点的堆中位置。整数数组
 		vtarget_ = mesh_->add_vertex_property<SurfaceMesh::Halfedge>("v:target");//每个点的出边？半边数组
-
+		
 		//new_vertices = mesh_->add_vertex_property<vec3>("v:new_ver");
 
 		// build priority queue建立优先队列
@@ -180,7 +200,7 @@ namespace easy3d {
 			queue_->reset_heap_position(v);                 //将v点堆位置重置为-1(不在堆中)：pos_[v] = -1
 			enqueue_vertex(v);                              //点的每个出边都在队列中有代价vpriority_和标记vtarget_
 		}
-
+		
 		while (nv > n_vertices && !queue_->empty()) {
 			// get 1st element
 			v = queue_->front();      //第一个条目出一个顶点
@@ -228,7 +248,7 @@ namespace easy3d {
 		//mesh_->remove_vertex_property(new_vertices);
 		// remove added properties
 		mesh_->remove_vertex_property(vquadric_); 
-
+		mesh_->remove_face_property(normal_cone_);
 		mesh_->remove_face_property(face_points_); 
 		mesh_->remove_face_property(planar_segments);
 	}
@@ -296,11 +316,98 @@ namespace easy3d {
 		if (!mesh_->is_collapse_ok(cd.v0v1))
 			return false;
 
-
-
+		//int common_vert = 0;
+		//for(auto vv: mesh_->vertices(cd.v0))
+		//{
+		//	for (auto vv2 : mesh_->vertices(cd.v1))
+		//	{
+		//		if (vv2 == vv) common_vert++;
+		//	}
+		//}
+		//if (common_vert != 2) return false;
+		//vec3 newv = compute_new_v(cd);
+		//vpoint_[cd.v1] = newv;
 		// remember the positions of the endpoints记住端点的位置p0、p1
 		const vec3 p0 = vpoint_[cd.v0];
 		const vec3 p1 = vpoint_[cd.v1];
+
+		// check for maximum edge length检查最大边长
+		if (edge_length_) {
+			for (auto v : mesh_->vertices(cd.v0)) {
+				if (v != cd.v1 && v != cd.vl && v != cd.vr) {
+					if (norm(vpoint_[v] - p1) > edge_length_)
+						return false;
+				}
+			}
+		}
+
+		 //check for flipping normals检查翻转法线
+		if (normal_deviation_ == 0.0) {
+			vpoint_[cd.v0] = p1;
+			for (auto f : mesh_->faces(cd.v0)) {
+				if (f != cd.fl && f != cd.fr) {
+					vec3 n0 = fnormal_[f];
+					vec3 n1 = mesh_->compute_face_normal(f);
+					if (dot(n0, n1) < 0.0) {
+						vpoint_[cd.v0] = p0;
+						return false;
+					}
+				}
+			}
+			vpoint_[cd.v0] = p0;
+		}
+
+		// check normal cone
+		else {
+			vpoint_[cd.v0] = p1;
+
+			SurfaceMesh::Face fll, frr;
+			if (cd.vl.is_valid())
+				fll = mesh_->face(
+					mesh_->opposite(mesh_->prev(cd.v0v1)));
+			if (cd.vr.is_valid())
+				frr = mesh_->face(
+					mesh_->opposite(mesh_->next(cd.v1v0)));
+
+			for (auto f : mesh_->faces(cd.v0)) {
+				if (f != cd.fl && f != cd.fr) {
+					NormalCone nc = normal_cone_[f];
+					nc.merge(mesh_->compute_face_normal(f));
+
+					if (f == fll)
+						nc.merge(normal_cone_[cd.fl]);
+					if (f == frr)
+						nc.merge(normal_cone_[cd.fr]);
+
+					if (nc.angle() > 0.5 * normal_deviation_) {
+						vpoint_[cd.v0] = p0;
+						return false;
+					}
+				}
+			}
+
+			vpoint_[cd.v0] = p0;
+		}
+		//**********************************************************//
+		// check aspect ratio检查纵横比例
+		if (aspect_ratio_) {
+			float ar0(0), ar1(0);
+
+			for (auto f : mesh_->faces(cd.v0)) {
+				if (f != cd.fl && f != cd.fr) {
+					// worst aspect ratio after collapse坍塌后的最大纵横比
+					vpoint_[cd.v0] = p1;
+					ar1 = std::max(ar1, aspect_ratio(f));
+					// worst aspect ratio before collapse坍塌前的最大纵横比
+					vpoint_[cd.v0] = p0;
+					ar0 = std::max(ar0, aspect_ratio(f));
+				}
+			}
+
+			// aspect ratio is too bad, and it does also not improve纵横比太糟糕了，也没有改善
+			if (ar1 > aspect_ratio_ && ar1 > ar0)
+				return false;
+		}
 
 		return true;
 	}
@@ -311,9 +418,9 @@ namespace easy3d {
 		// computer quadric error metric
 		Quadric Q = vquadric_[cd.v0];
 		Q += vquadric_[cd.v1];        //此时Q为边v0v1的二次误差
-		vec3 newv = compute_new_v(cd);
-		return Q(newv);
-		//return Q(vpoint_[cd.v1]);     //此时为带入v1的能量cost=ei,j
+		//vec3 newv = compute_new_v(cd);
+		//return Q(newv);
+		return Q(vpoint_[cd.v1]);     //此时为带入v1的能量cost=ei,j
 	}
 
 	vec3 SurfaceMeshQEM::compute_new_v(const CollapseData &cd){
@@ -361,11 +468,54 @@ namespace easy3d {
 	void SurfaceMeshQEM::postprocess_collapse(const CollapseData &cd) {
 		// update error quadrics 更新v1的二次误差 &&&&  注v1的坐标即为newv
 		vquadric_[cd.v1] += vquadric_[cd.v0];
+		// update normal cones？？
+        if (normal_deviation_) {
+            for (auto f : mesh_->faces(cd.v1)) {
+                normal_cone_[f].merge(mesh_->compute_face_normal(f));
+            }
 
+            if (cd.vl.is_valid()) {
+                SurfaceMesh::Face f = mesh_->face(cd.v1vl);
+                if (f.is_valid())
+                    normal_cone_[f].merge(normal_cone_[cd.fl]);
+            }
+
+            if (cd.vr.is_valid()) {
+                SurfaceMesh::Face f = mesh_->face(cd.vrv1);
+                if (f.is_valid())
+                    normal_cone_[f].merge(normal_cone_[cd.fr]);
+            }
+        }
 	}
 
 	//-----------------------------------------------------------------------------
+	float SurfaceMeshQEM::aspect_ratio(SurfaceMesh::Face f) const {
+		// min height is area/maxLength
+		// aspect ratio = length / height
+		//              = length * length / area
 
+		SurfaceMesh::VertexAroundFaceCirculator fvit = mesh_->vertices(f);
+
+		const vec3 p0 = vpoint_[*fvit];
+		const vec3 p1 = vpoint_[*(++fvit)];
+		const vec3 p2 = vpoint_[*(++fvit)];
+
+		const vec3 d0 = p0 - p1;
+		const vec3 d1 = p1 - p2;
+		const vec3 d2 = p2 - p0;
+
+		const float l0 = length2(d0);
+		const float l1 = length2(d1);
+		const float l2 = length2(d2);
+
+		// max squared edge length
+		const float l = std::max(l0, std::max(l1, l2));
+
+		// triangle area
+		float a = norm(cross(d0, d1));
+
+		return l / a;
+	}
 
 	//-----------------------------------------------------------------------------
 
@@ -440,8 +590,9 @@ namespace easy3d {
 		SurfaceMesh::Halfedge o1 = mesh_->next(o0);    //需要塌陷
 
 
-		SurfaceMesh::Vertex vh = mesh_->target(h);  //最终保留的顶点，边v0v1中的v1
-		vpoint_[vh] = newv;
+		//SurfaceMesh::Vertex vh = mesh_->target(h);  //最终保留的顶点，边v0v1中的v1
+		//vpoint_[vh] = newv;
+
 		// remove edge
 		mesh_->remove_edge(h0);
 		
