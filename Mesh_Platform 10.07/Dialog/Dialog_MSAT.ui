@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogMSAT</class>
+ <widget class="QDialog" name="DialogMSAT">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>398</width>
+    <height>470</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>60</y>
+     <width>301</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>MSAT</string>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>30</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>alpha：</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATalpha">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>30</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>2</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>10.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>70</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>beta:</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATbeta">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>70</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>0.005000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>100</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>threshold:</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATthreshold">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>100</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>2</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>0.900000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>140</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>epsilon:</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATepsilon">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>140</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>3</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>0.001000000000000</double>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonRunMSAT">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>250</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>run</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>170</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>norm_Itr:</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>200</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ver_Itr:</string>
+    </property>
+    <property name="buddy">
+     <cstring>BoxMSATalpha</cstring>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATNormItr">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>170</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>30.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="BoxMSATVerItr">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>200</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <double>1000000000.000000000000000</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000100000000000</double>
+    </property>
+    <property name="value">
+     <double>30.000000000000000</double>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
