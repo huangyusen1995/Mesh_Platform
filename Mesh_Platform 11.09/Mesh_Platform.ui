@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Mesh_PlatformClass</class>
+ <widget class="QMainWindow" name="Mesh_PlatformClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1234</width>
+    <height>778</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>50</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Mesh_Platform</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1234</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuRecent_Files">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionClearRecentFiles"/>
+    </widget>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="menuRecent_Files"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionSnapshot"/>
+    <addaction name="actionBackground_Color"/>
+   </widget>
+   <widget class="QMenu" name="menuTopology">
+    <property name="title">
+     <string>Topology</string>
+    </property>
+    <addaction name="actionShow_Statistics"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_Mesh_Platform"/>
+   </widget>
+   <widget class="QMenu" name="menuAlgorithm">
+    <property name="title">
+     <string>Algorithm</string>
+    </property>
+    <addaction name="actionFeature_preserving_3D_mesh_simplification"/>
+    <addaction name="actionMumford_Shah_AT"/>
+   </widget>
+   <widget class="QMenu" name="menuError">
+    <property name="title">
+     <string>Error</string>
+    </property>
+    <addaction name="actionMean_Error_2"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuTopology"/>
+   <addaction name="menuAlgorithm"/>
+   <addaction name="menuError"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>400</width>
+     <height>727</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
+   <property name="windowTitle">
+    <string>Render</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidgetGeometric">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContentsGeometric">
+    <widget class="QTabWidget" name="tabWidgetRendering">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>400</width>
+       <height>688</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Rendering</string>
+      </attribute>
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>381</width>
+         <height>661</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayoutRendering">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSnapshot">
+   <property name="text">
+    <string>Snapshot</string>
+   </property>
+  </action>
+  <action name="actionBackground_Color">
+   <property name="text">
+    <string>Background Color</string>
+   </property>
+  </action>
+  <action name="actionShow_Statistics">
+   <property name="text">
+    <string>Show Statistics</string>
+   </property>
+  </action>
+  <action name="actionAbout_Mesh_Platform">
+   <property name="text">
+    <string>About Mesh_Platform</string>
+   </property>
+  </action>
+  <action name="actionClearRecentFiles">
+   <property name="text">
+    <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionMean_Error">
+   <property name="text">
+    <string>Mean Error</string>
+   </property>
+  </action>
+  <action name="actionRMS_Error">
+   <property name="text">
+    <string>RMS Error</string>
+   </property>
+  </action>
+  <action name="actionMesh_Filter_Error">
+   <property name="text">
+    <string>Mesh Filter Error</string>
+   </property>
+  </action>
+  <action name="actionBilateralNormalFilter_2">
+   <property name="text">
+    <string>BilateralNormalFilter</string>
+   </property>
+  </action>
+  <action name="action_BilateralNormalFilter">
+   <property name="text">
+    <string>Bilateral Normal Filter</string>
+   </property>
+  </action>
+  <action name="actionPlanarStructureExtraction">
+   <property name="text">
+    <string>Planar Region Extraction </string>
+   </property>
+  </action>
+  <action name="actionQEM">
+   <property name="text">
+    <string>QEM</string>
+   </property>
+  </action>
+  <action name="actionFeature_preserving_3D_mesh_simplification">
+   <property name="text">
+    <string>Feature-preserving 3D mesh simplification</string>
+   </property>
+  </action>
+  <action name="actionMean_Error_2">
+   <property name="text">
+    <string>Mean Error</string>
+   </property>
+  </action>
+  <action name="actionColormMap">
+   <property name="text">
+    <string>ColormMap</string>
+   </property>
+  </action>
+  <action name="actionLoad_GroundTruth">
+   <property name="text">
+    <string>Load GroundTruth</string>
+   </property>
+  </action>
+  <action name="actionMumford_Shah_AT">
+   <property name="text">
+    <string>Mumford-Shah AT</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Mesh_Platform.qrc"/>
+ </resources>
+ <connections/>
+</ui>
